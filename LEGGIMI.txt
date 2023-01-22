@@ -1,0 +1,5 @@
+Per poter utilizzare la card bisogna installare il componente aggiuntivo
+
+https://github.com/nervetattoo/simple-thermostat
+
+Copiare il contenuto del file automation in automation.yaml home assistant, oltre all'invio di notifiche Alexa Telegram e notifiche push HA, il file di automazione contiene anche la gestione del timer giornaliero e settimanale tramite aiutanti HA da creare come nell'immagine

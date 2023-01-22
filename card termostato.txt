@@ -1,0 +1,5 @@
+entity: climate.termostato_nextion
+name: Termostato
+type: custom:simple-thermostat
+path: riscaldamenti
+title: Riscaldamenti

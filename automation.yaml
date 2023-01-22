@@ -1,0 +1,305 @@
+- id: notification
+  alias: TELEGRAM E NOTIFICHE PUSH Modalità riscaldamento
+  description: ''
+  trigger:
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: 'off'
+    platform: state
+    to: heating
+    attribute: hvac_action
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: 'off'
+    platform: state
+    to: idle
+    attribute: hvac_action
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: idle
+    platform: state
+    to: 'off'
+    attribute: hvac_action
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: heating
+    platform: state
+    to: 'off'
+    attribute: hvac_action
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: heating
+    platform: state
+    to: idle
+    attribute: hvac_action
+  - entity_id:
+    - climate.thermostat_climate_controller
+    from: idle
+    platform: state
+    to: heating
+    attribute: hvac_action
+  condition: []
+  action:
+  - data:
+      message: Heater is {{state_attr('climate.thermostat_climate_controller', 'hvac_action')}}
+      title: Heater Status
+    service: persistent_notification.create
+  - data:
+      message: Heater is {{state_attr('climate.thermostat_climate_controller', 'hvac_action')}}
+      title: Heater Status
+    service: notify.giuseppe_telegram
+  mode: single
+
+
+- id: '1606918053818'
+  alias: ALEXA Riscaldamenti OFF/ON/HEAT
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.thermostat_climate_controller
+    from: 'off'
+    to: heating
+    attribute: hvac_action
+  condition: []
+  action:
+  - service: notify.alexa_media_echo_dot_living
+    data:
+      message: Ho acceso i riscaldamenti
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+  mode: single
+
+- id: '1606918277823'
+  alias: ALEXA Riscaldamenti MODULAZIONE
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.thermostat_climate_controller
+    from: heating
+    to: idle
+    attribute: hvac_action
+  condition: []
+  action:
+  - service: notify.alexa_media_echo_dot_living
+    data:
+      message: Ho raggiunto la temperatura desiderata, il riscaldamento sarà impostato
+        su modulazione
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+  mode: single
+
+- id: '1606939718874'
+  alias: TELEGRAM Termostato disconnesso
+  description: ''
+  trigger:
+  - type: not_connected
+    platform: device
+    device_id: 97f63d8c2a6811eb9468cd12f9df2265
+    entity_id: binary_sensor.status_termostato_nextion_mcz
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+  condition: []
+  action:
+  - service: notify.giuseppe_telegram
+    data:
+      message: Termostato disconnesso
+  mode: single
+
+- id: '1606939744472'
+  alias: TELEGRAM Termostato connesso
+  description: ''
+  trigger:
+  - type: connected
+    platform: device
+    device_id: 97f63d8c2a6811eb9468cd12f9df2265
+    entity_id: binary_sensor.status_termostato_nextion_mcz
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.giuseppe_telegram
+    data:
+      message: Termostato connesso
+  mode: single
+
+- id: '1607116646780'
+  alias: ALEXA Riscaldamenti HEAT
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.thermostat_climate_controller
+    from: idle
+    to: heating
+    attribute: hvac_action
+  condition: []
+  action:
+  - service: notify.alexa_media_echo_dot_living
+    data:
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+      message: Ho acceso i riscaldamenti
+  mode: single
+
+alias: ALEXA Riscaldamento OFF
+description: ""
+trigger:
+  - platform: state
+    entity_id:
+      - climate.thermostat_climate_controller
+    from: idle
+    to: "off"
+    attribute: hvac_action
+  - platform: state
+    entity_id:
+      - climate.thermostat_climate_controller
+    from: heating
+    to: "off"
+    attribute: hvac_action
+condition: []
+action:
+  - service: notify.alexa_media_echo_dot_living
+    data:
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+      message: Ho spento i riscaldamenti
+mode: single
+
+
+- id: '1611700355889'
+  alias: TIMER ON singolo riscaldamenti
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.timer_riscaldamento
+  condition:
+  - condition: state
+    entity_id: input_boolean.timer_singolo_riscaldamenti
+    state: 'on'
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: heat
+    target:
+      device_id: 1bcf857f1d6c2b15e3f34ad4f8dbd7dc
+  mode: single
+
+- id: '1611704087586'
+  alias: TIMER OFF giornaliero riscaldamenti
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.timer_off_riscaldamenti
+  condition:
+  - condition: state
+    entity_id: input_boolean.timer_giornaliero_riscaldamenti
+    state: 'on'
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: 'off'
+    target:
+      device_id: 1bcf857f1d6c2b15e3f34ad4f8dbd7dc
+  mode: single
+
+- id: '1611792743489'
+  alias: 'TIMER ON giornaliero riscaldamenti '
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.timer_riscaldamento
+  condition:
+  - condition: state
+    entity_id: input_boolean.timer_giornaliero_riscaldamenti
+    state: 'on'
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: heat
+    target:
+      device_id: 1bcf857f1d6c2b15e3f34ad4f8dbd7dc
+  mode: single
+
+
+- id: '1611794144220'
+  alias: TIMER OFF singolo riscaldamenti
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.timer_off_riscaldamenti
+  condition:
+  - condition: state
+    entity_id: input_boolean.timer_singolo_riscaldamenti
+    state: 'on'
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: 'off'
+    target:
+      device_id: 1bcf857f1d6c2b15e3f34ad4f8dbd7dc
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.timer_singolo_riscaldamenti
+    data: {}
+  mode: single
+
+- id: '1611931675574'
+  alias: TELEGRAM Allarme armato notturno
+  description: Antifurto
+  trigger:
+  - entity_id: sensor.alarm_condition
+    from: disarmed
+    platform: state
+    to: armed_night
+  condition: []
+  action:
+  - data:
+      message: Antifurto parziale/notturno attivato
+    service: notify.giuseppe_telegram
+  - service: notify.alexa_media_echo_dot_di_cosimo
+    data:
+      message: Antifurto notturno attivato
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+  mode: single
+
+- id: '1674235333357'
+  alias: ALEXA Riscaldamento OFF/ON/IDLE
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - climate.thermostat_climate_controller
+    from: 'off'
+    to: idle
+    attribute: hvac_action
+  condition: []
+  action:
+  - service: notify.alexa_media_echo_dot_living
+    data:
+      message: Ho acceso il sistema regola il setpoint
+      title: Titolo
+      data:
+        type: announce
+        method: spoken
+      target: media_player.alexa
+  mode: single
