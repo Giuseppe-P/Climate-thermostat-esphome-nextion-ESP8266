@@ -7,7 +7,7 @@ Compiled with esphome version 2022.12.3
 
 ![](https://github.com/Giuseppe-P/Climate-thermostat-esphome-nextion/blob/main/HA_ESPHOME_TERMOSTATO_NEXTION_ONLINE.png)
 
-This version allows you to manage the thermostat via the Home Assistant and in the absence of the server in manual touch nextion mode.
+For use with a single contact for standard boilers just ignore the connection to the second relay
 
 ESPHOME Documentation:
 https://esphome.io/index.html
