@@ -1,5 +1,5 @@
 # Climate-thermostat-esphome-nextion ESP32
-# ESPHOME - HOME ASSISTANT - Thermostat Nextion Nextion-3.2 inch
+# ESPHOME - HOME ASSISTANT - Thermostat ESP32 Nextion-3.2 inch
 
 I do not assume responsibility for incorrect use or lack of competence.
 
