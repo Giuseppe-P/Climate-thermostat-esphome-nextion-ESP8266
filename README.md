@@ -1,5 +1,8 @@
-# Climate-thermostat-esphome-nextion
+# Climate-thermostat-esphome-nextion ESP8266
 # ESPHOME - HOME ASSISTANT - Thermostat Nextion Nextion-3.2 inch
+
+# N.B Following esphome updates I abandoned esp8266 due to communication problems with Nextion. See ESP32 Clima project
+
 Touch screen thermostat for inserts and pellet fireplaces.
 Separate logic with heating switching on and modulation management based on the setpoint temperature via two relays, one of which is activated and deactivated on total switching on and off, and the second is activated and deactivated based on the set temperature, allowing thermo-fireplace modulation.
  
