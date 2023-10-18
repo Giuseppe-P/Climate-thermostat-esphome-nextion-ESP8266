@@ -1,5 +1,7 @@
-# Climate-thermostat-esphome-nextion ESP32
-# ESPHOME - HOME ASSISTANT - Thermostat ESP32 Nextion-3.2 inch
+# Climate-thermostat-esphome-nextion ESP8266
+# ESPHOME - HOME ASSISTANT - Thermostat ESP8266 Nextion-3.2 inch
+
+# N.B. Due to esphome updates I abandoned esp8266 due to lack of communication with the Nextion panel. I recommend using the ESP32 project
 
 I do not assume responsibility for incorrect use or lack of competence.
 
@@ -43,7 +45,7 @@ Software:
 
 4 - upload the .HMI file to the next touch panel
 
-5 - copy the contents of configuration.yaml and paste it into configuration.yaml in Home Assistant
+5 - copy the contents of automation.yaml and paste it into automation.yaml in Home Assistant
 
 6 - In addition to sending Alexa Telegram notifications and HA push notifications, the automation file also contains daily and weekly timer management via home assistant helpers to be created as in the image
 
